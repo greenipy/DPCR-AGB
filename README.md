@@ -5,7 +5,7 @@ Above-Ground Forest Biomass Estimation from Airborne LiDAR*.
 
 When cloning the repository, make sure to also get submodules:
 ```
-git clone --recurse-submodules https://github.com/StefOe/DPCR-AGB.git
+git clone --recurse-submodules https://github.com/greenipy/DPCR-AGB.git
 ```
 
 We include **code**, **evaluation scripts**, **model weights** (soon), and the **dataset**.
@@ -59,7 +59,7 @@ the `eval_deep_learning_v2.ipynb`. The results for the network size experiment a
 
 We setup our environment in the following way (conda is already installed):
 
-1. go to `pointcloud-biomass-estimator/torch-points3d`
+1. go to `torch-points3d`
 2. Make sure to install cuda 11.8 (don't forget to deselect the driver install if your drivers are current)
 
 ```
