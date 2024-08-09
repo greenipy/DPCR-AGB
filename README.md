@@ -61,10 +61,16 @@ We setup our environment in the following way (conda is already installed):
 
 1. go to `torch-points3d`
 2. Make sure to install cuda 11.8 (don't forget to deselect the driver install if your drivers are current)
+3. [cuda-toolkit](https://developer.nvidia.com/cuda-12-4-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Debian&target_version=12&target_type=deb_local)
 
 ```
-wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run
-sudo sh cuda_11.8.0_520.61.05_linux.run
+wget https://developer.download.nvidia.com/compute/cuda/12.4.0/local_installers/cuda-repo-debian12-12-4-local_12.4.0-550.54.14-1_amd64.deb
+sudo dpkg -i cuda-repo-debian12-12-4-local_12.4.0-550.54.14-1_amd64.deb
+sudo cp /var/cuda-repo-debian12-12-4-local/cuda-*-keyring.gpg /usr/share/keyrings/
+sudo add-apt-repository contrib
+sudo apt-get update
+sudo apt-get -y install cuda-toolkit-12-4
+sudo apt-get install -y nvidia-open
 ```
 
 3. after installing close and reopen the terminal to check if the PATH is set correctly with `echo $PATH`. It should
@@ -73,7 +79,8 @@ sudo sh cuda_11.8.0_520.61.05_linux.run
 5. install mamba (optional but highly recommended)
 
 ```
-conda install mamba -c conda-forge
+curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh
 ```
 
 3. create conda environment:
@@ -95,10 +102,14 @@ mamba activate pts
 ```
 
 5. install missing pip packages for Minkowski networks (Windows is currently not supported)
-
+Check [Can't install with CUDA 12.1](https://github.com/NVIDIA/MinkowskiEngine/issues/543)
 ```
 pip install torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0  #avoid "error loading: site-packages\torch\lib\shm.dll"
-pip install -U git+https://github.com/NVIDIA/MinkowskiEngine -v --no-deps --config-settings blas_include_dirs=${CONDA_PREFIX}/include blas=openblas
+mamba install cuda -c nvidia/label/cuda-12.4.0
+git clone https://github.com/NVIDIA/MinkowskiEngine.git
+cd MinkowskiEngine
+python setup.py install --blas_include_dirs=${CONDA_PREFIX}/include --blas=openblas
+# pip install -U git+https://github.com/NVIDIA/MinkowskiEngine -v --no-deps --config-settings="--blas_include_dirs=${CONDA_PREFIX}/include" --config-settings="--blas=openblas"
 
 ```
 
