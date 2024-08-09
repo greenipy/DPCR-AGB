@@ -1,10 +1,10 @@
-name: pts
+name: pts12
 channels:
+  - conda-forge
   - pytorch
   - nvidia
   - metric-learning
-  - anaconda
-  - conda-forge
+  - anaconda  
   - pyg
   - defaults
 dependencies:
@@ -13,15 +13,15 @@ dependencies:
   - cudatoolkit
   - gdal
   - gdown
-  - geopandas=0.12.2
+  - geopandas
   - llvmlite
   - numba
   - hydra-core
   - matplotlib
   - openblas
-  - pandas=1.5.2
+  - pandas
   - proj
-  - python=3.8
+  - python=3.12
   - pyyaml
   - rtree
   - scikit-image
@@ -39,7 +39,7 @@ dependencies:
   - pip
   - pytorch
   - pytorch::pytorch-cuda=12.4
-  - pyg::pyg=2.3.1
+  - pyg::pyg=2.5.3
   - pyg::pytorch-cluster
   - pyg::pytorch-scatter
   - pip:
