@@ -94,9 +94,10 @@ mamba env create -f env_cpu.yml
 mamba activate pts
 ```
 
-5. install missing pip packages for Minkowski networks
+5. install missing pip packages for Minkowski networks (Windows is currently not supported)
 
 ```
+pip install torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0  #avoid "error loading: site-packages\torch\lib\shm.dll"
 pip install -U git+https://github.com/NVIDIA/MinkowskiEngine -v --no-deps --config-settings blas_include_dirs=${CONDA_PREFIX}/include blas=openblas
 
 ```
@@ -104,7 +105,7 @@ pip install -U git+https://github.com/NVIDIA/MinkowskiEngine -v --no-deps --conf
 or for cpu-version:
 
 ```
-pip install -U git+https://github.com/NVIDIA/MinkowskiEngine -v --no-deps --config-settings blas=openblas
+pip install -U git+https://github.com/NVIDIA/MinkowskiEngine -v --no-deps --config-settings="--blas_include_dirs=${CONDA_PREFIX}/include" --config-settings="--blas=openblas"
 
 ```
 
