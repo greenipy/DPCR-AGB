@@ -152,6 +152,14 @@ Installation error with CUDA below:
 or for cpu-version:
 
 ```
+mamba uninstall pytorch torchvision torchaudio cpuonly -c pytorch
+mamba uninstall cudatoolkit
+conda install pytorch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 cpuonly -c pytorch
+# pip install torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 --index-url https://download.pytorch.org/whl/cpu
+pip uninstall sympy
+mamba install 'pyg=2.5.2[build=py38_torch_2.2.0_cpu]' 'pytorch-cluster=1.6.3[build=py38_torch_2.2.0_cpu]' 'pytorch-scatter=2.1.2[build=py38_torch_2.2.0_cpu]' -c pyg -c pytorch -c conda-forge
+cd MinkowskiEngine # 0.5.4
+python setup.py install --blas_include_dirs=${CONDA_PREFIX}/include --blas=openblas --cpu_only
 pip install -U git+https://github.com/NVIDIA/MinkowskiEngine -v --no-deps --config-settings="--blas_include_dirs=${CONDA_PREFIX}/include" --config-settings="--blas=openblas"
 
 ```
@@ -160,15 +168,12 @@ Install missing packages for cpu-version:
 
 ```
 # ModuleNotFoundError: No module named 'torch_geometric'
-pip install  torch-geometric
+# ModuleNotFoundError: No module named 'torch_cluster'
+# ModuleNotFoundError: No module named 'torch_scatter'
+pip install torch_geometric torch_cluster torch_scatter
 # ImportError: libtiff.so.5: cannot open shared object file: No such file or directory
 sudo apt install libtiff5-dev
 sudo ln -s /usr/lib/x86_64-linux-gnu/libtiff.so ./libtiff.so.5 
-# ModuleNotFoundError: No module named 'torch_cluster'
-pip install torch-cluster
-# ModuleNotFoundError: No module named 'torch_scatter'
-pip install torch-scatter
-
 ```
 
 5. compile KPConv scripts
