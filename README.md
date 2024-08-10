@@ -154,6 +154,10 @@ or for cpu-version:
 ```
 mamba uninstall pytorch torchvision torchaudio cpuonly -c pytorch
 mamba uninstall cudatoolkit
+xargs mamba remove -y
+cd conf
+grep -Ril "CUDA" ./        # change all to -1
+mamba list | grep sym |
 conda install pytorch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 cpuonly -c pytorch
 # pip install torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 --index-url https://download.pytorch.org/whl/cpu
 pip uninstall sympy
