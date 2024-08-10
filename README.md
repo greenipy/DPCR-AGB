@@ -101,7 +101,7 @@ mamba env create -f env_cpu.yml
 mamba activate pts
 ```
 
-5. install missing pip packages for Minkowski networks (Windows is currently not supported).
+5. install missing pip packages for Minkowski networks (Windows is currently not supported, Failed: 2024-08-10).
 
 * [Can't install with CUDA 12.1](https://github.com/NVIDIA/MinkowskiEngine/issues/543)
 * [fix build with CUDA 12.2]([https://github.com/NVIDIA/MinkowskiEngine/issues/543](https://github.com/NVIDIA/MinkowskiEngine/pull/567))
@@ -123,10 +123,51 @@ python setup.py install --blas_include_dirs=${CONDA_PREFIX}/include --blas=openb
 
 ```
 
+Installation error with CUDA below:
+
+```
+# WSL2
+# Debian 12 (bookworm)
+# Cuda 12.4
+
+/usr/include/c++/12/bits/shared_ptr_base.h(1561): error: more than one instance of overloaded function "std::__to_address" matches the argument list:
+            function template "_Tp *cuda::std::__4::__to_address(_Tp *) noexcept" (declared at line 277 of /usr/local/cuda-12.4/targets/x86_64-linux/include/cuda/std/detail/libcxx/include/__memory/pointer_traits.h)
+            function template "_Tp *std::__to_address(_Tp *) noexcept" (declared at line 228 of /usr/include/c++/12/bits/ptr_traits.h)
+
+/usr/include/c++/12/bits/shared_ptr_base.h(1563): error: no instance of overloaded function "std::__shared_ptr<_Tp, _Lp>::_M_enable_shared_from_this_with [with _Tp=concurrent_unordered_map<minkowski::coordinate<int32_t>, uint32_t, minkowski::detail::coordinate_murmur3<int32_t>, minkowski::detail::coordinate_equal_to<int32_t>, minkowski::detail::default_allocator<cuda::std::__4::pair<minkowski::coordinate<int32_t>, uint32_t>>>, _Lp=__gnu_cxx::_S_atomic]" matches the argument list      
+            argument types are: (<error-type>)
+     _M_enable_shared_from_this_with(__raw);
+
+/usr/include/c++/12/bits/shared_ptr_base.h(1561): error: more than one instance of overloaded function "std::__to_address" matches the argument list:
+            function template "_Tp *cuda::std::__4::__to_address(_Tp *) noexcept" (declared at line 277 of /usr/local/cuda-12.4/targets/x86_64-linux/include/cuda/std/detail/libcxx/include/__memory/pointer_traits.h)
+            function template "_Tp *std::__to_address(_Tp *) noexcept" (declared at line 228 of /usr/include/c++/12/bits/ptr_traits.h)
+
+/usr/include/c++/12/bits/shared_ptr_base.h(1563): error: no instance of overloaded function "std::__shared_ptr<_Tp, _Lp>::_M_enable_shared_from_this_with [with _Tp=concurrent_unordered_map<minkowski::coordinate<int32_t>, uint32_t, minkowski::detail::coordinate_murmur3<int32_t>, minkowski::detail::coordinate_equal_to<int32_t>, minkowski::detail::c10_allocator<cuda::std::__4::pair<minkowski::coordinate<int32_t>, uint32_t>>>, _Lp=__gnu_cxx::_S_atomic]" matches the argument list
+            argument types are: (<error-type>)
+     _M_enable_shared_from_this_with(__raw);
+
+```
+
+
 or for cpu-version:
 
 ```
 pip install -U git+https://github.com/NVIDIA/MinkowskiEngine -v --no-deps --config-settings="--blas_include_dirs=${CONDA_PREFIX}/include" --config-settings="--blas=openblas"
+
+```
+
+Install missing packages for cpu-version:
+
+```
+# ModuleNotFoundError: No module named 'torch_geometric'
+pip install  torch-geometric
+# ImportError: libtiff.so.5: cannot open shared object file: No such file or directory
+sudo apt install libtiff5-dev
+sudo ln -s /usr/lib/x86_64-linux-gnu/libtiff.so ./libtiff.so.5 
+# ModuleNotFoundError: No module named 'torch_cluster'
+pip install torch-cluster
+# ModuleNotFoundError: No module named 'torch_scatter'
+pip install torch-scatter
 
 ```
 
