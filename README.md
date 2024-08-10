@@ -102,9 +102,13 @@ mamba activate pts
 ```
 
 5. install missing pip packages for Minkowski networks (Windows is currently not supported).
-Check [Can't install with CUDA 12.1](https://github.com/NVIDIA/MinkowskiEngine/issues/543)
+
+* [Can't install with CUDA 12.1](https://github.com/NVIDIA/MinkowskiEngine/issues/543)
+* [fix build with CUDA 12.2]([https://github.com/NVIDIA/MinkowskiEngine/issues/543](https://github.com/NVIDIA/MinkowskiEngine/pull/567))
+* [Compilation: compiler finds both std::to_address and cuda::std::to_address]([https://github.com/NVIDIA/MinkowskiEngine/issues/596))
+
 ```
-# pip install torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0  #avoid "error loading: site-packages\torch\lib\shm.dll"
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 # mamba install cuda -c nvidia/label/cuda-12.4.0
 # sudo apt install ninja-build cmake generate-ninja
 # git clone https://github.com/NVIDIA/MinkowskiEngine.git
